@@ -3,6 +3,7 @@ const Joi = require("joi");
 
 const handleSchemaValidationErrors = require("../helpers/handleSchemaValidationErrors");
 
+const emailRegexp = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const phoneRegexp = /^\(\d{3}\) \d{3}-\d{4}$/;
 
 const contactSchema = new Schema(
@@ -13,6 +14,7 @@ const contactSchema = new Schema(
     },
     email: {
       type: String,
+      match: emailRegexp,
     },
     phone: {
       type: String,
@@ -33,6 +35,7 @@ const addContactSchema = Joi.object({
     .email({
       minDomainSegments: 2,
     })
+    .pattern(emailRegexp)
     .required(),
   phone: Joi.string().pattern(phoneRegexp).required(),
   favorite: Joi.bool(),
@@ -42,7 +45,7 @@ contactSchema.post("save", handleSchemaValidationErrors);
 
 const updateFavoriteSchema = Joi.object({
   favorite: Joi.bool().required().messages({
-      'any.required': `Missing field favorite`
+    "any.required": `Missing field favorite`,
   }),
 });
 
