@@ -31,7 +31,6 @@ const userSchema = Schema(
 
 const User = model("user", userSchema);
 
-
 const userSignUpSchema = Joi.object({
   password: Joi.string().min(6).required(),
   email: Joi.string()
@@ -53,9 +52,19 @@ const userLoginSchema = Joi.object({
     .required(),
 });
 
+const updateSubscriptionSchema = Joi.object({
+  subscription: Joi.string()
+    .valid("starter", "pro", "business")
+    .required()
+    .messages({
+      "any.required": `Field subscription must contain one of these - "starter", "pro", "business"`,
+    }),
+});
+
 const schemas = {
   userSignUpSchema,
   userLoginSchema,
+  updateSubscriptionSchema,
 };
 
 module.exports = {
