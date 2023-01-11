@@ -43,6 +43,8 @@ const addContactSchema = Joi.object({
 
 contactSchema.post("save", handleSchemaValidationErrors);
 
+const Contact = model("contact", contactSchema);
+
 const updateFavoriteSchema = Joi.object({
   favorite: Joi.bool().required().messages({
     "any.required": `Missing field favorite`,
@@ -53,8 +55,6 @@ const schemas = {
   addContactSchema,
   updateFavoriteSchema,
 };
-
-const Contact = model("contact", contactSchema);
 
 module.exports = {
   Contact,
