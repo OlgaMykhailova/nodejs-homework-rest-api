@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { isValidId, validation } = require("../../middlewares");
+const { auth, isValidId, validation } = require("../../middlewares");
 const { ctrlWrapper } = require("../../helpers");
 const { schemas } = require("../../models/contact");
 
@@ -14,6 +14,7 @@ router.get("/:contactId", isValidId, ctrlWrapper(ctrl.getContactById));
 
 router.post(
   "/",
+  auth,
   validation(schemas.addContactSchema),
   ctrlWrapper(ctrl.addContact)
 );

@@ -9,7 +9,7 @@ const signup = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user) {
-    throw createError(409, "message: Email in use");
+    throw createError(409, "Email in use");
   }
 
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));

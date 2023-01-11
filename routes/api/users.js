@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { isValidId, validation } = require("../../middlewares");
+const { auth, validation } = require("../../middlewares");
 const { ctrlWrapper } = require("../../helpers");
 const { users: ctrl } = require("../../controllers");
 const { schemas } = require("../../models/user");
@@ -18,5 +18,7 @@ router.post(
   validation(schemas.userLoginSchema),
   ctrlWrapper(ctrl.login)
 );
+
+router.get('/current', auth, ctrlWrapper(ctrl.getCurrentUser));
 
 module.exports = router;
