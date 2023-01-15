@@ -3,7 +3,8 @@ const createError = require("http-errors");
 
 const getContactById = async (req, res, next) => {
   const { contactId } = req.params;
-  const result = await Contact.findById(contactId);
+  const { _id } = req.user;
+  const result = await Contact.findOne({contactId, owner: _id});
   if (!result) {
     throw createError(404, `Contact with id ${contactId} not found`);
   }

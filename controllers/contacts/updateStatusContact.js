@@ -2,8 +2,9 @@ const { Contact } = require("../../models");
 const createError = require("http-errors");
 
 const updateStatusContact = async (req, res, next) => {
+  const { _id } = req.user;
   const { contactId } = req.params;
-  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+  const result = await Contact.findOneAndUpdate({contactId, owner: _id}, req.body, {
     new: true,
   });
   if (!result) {
