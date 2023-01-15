@@ -45,8 +45,8 @@ describe("POST /api/users/login", () => {
       email: "test@mail.com",
       password: "password",
     });
-    const user = await User.findOne({email: "test@mail.com"});
-     expect(res.body.data.token).toBe(user.token);
+    const user = await User.findOne({ email: "test@mail.com" });
+    expect(res.body.data.token).toBe(user.token);
   });
   it("user must exist", async () => {
     const res = await request(app).post("/api/users/login").send({
