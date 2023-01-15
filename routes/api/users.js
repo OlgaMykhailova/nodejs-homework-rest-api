@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { auth, validation } = require("../../middlewares");
+const { auth, validation, uploadFile } = require("../../middlewares");
 const { ctrlWrapper } = require("../../helpers");
 const { users: ctrl } = require("../../controllers");
 const { schemas } = require("../../models/user");
@@ -19,15 +19,22 @@ router.post(
   ctrlWrapper(ctrl.login)
 );
 
-router.get('/current', auth, ctrlWrapper(ctrl.getCurrentUser));
+router.get("/current", auth, ctrlWrapper(ctrl.getCurrentUser));
 
-router.get('/logout', auth, ctrlWrapper(ctrl.logout))
+router.get("/logout", auth, ctrlWrapper(ctrl.logout));
 
 router.patch(
   "/",
   auth,
   validation(schemas.updateSubscriptionSchema),
   ctrlWrapper(ctrl.updateSubscription)
+);
+
+router.patch(
+  "/avatars",
+  auth,
+  uploadFile.single("avatar"),
+  ctrlWrapper(ctrl.updateAvatar)
 );
 
 module.exports = router;
