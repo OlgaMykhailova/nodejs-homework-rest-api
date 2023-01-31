@@ -15,7 +15,7 @@ const login = async (req, res) => {
     throw createError(401, "Email or password is wrong");
   }
 
-  if (!user.vefify) {
+  if (!user.verify) {
     throw createError(401, "Email not verified");
   }
 
